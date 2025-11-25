@@ -1,5 +1,6 @@
 from django.db import models
-from instructors.models import Instructor  
+from instructors.models import Instructor 
+from datetime import date 
 
 class Member(models.Model):
     WORKOUT_TIMES = [
@@ -40,3 +41,9 @@ class Member(models.Model):
         return today.year - self.date_of_birth.year - (
             (today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day)
         )
+    
+    def is_subscription_active(self):
+        if self.subscription:
+            end_date = self.subscription.calculate_end_date(self.join_date)
+            return date.today() <= end_date
+        return False
