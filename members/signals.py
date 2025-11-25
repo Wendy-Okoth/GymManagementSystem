@@ -16,7 +16,7 @@ def send_expiry_reminder(sender, instance, **kwargs):
                     f"Your {instance.subscription.plan_type} plan expired on {expiry_date}.\n"
                     "Please renew to continue enjoying our gym services."
                 ),
-                from_email="encoregym@gmail.com",
+                from_email="gymencorewebsite@gmail.com",
                 recipient_list=[instance.email],
                 fail_silently=True,  # avoids crashing if email fails
             )
