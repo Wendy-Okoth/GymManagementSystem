@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+def instructor_list(request):
+    return HttpResponse("Instructors list page coming soon!")
+
+def instructor_detail(request, id):
+    return HttpResponse(f"Instructor detail page for instructor {id}")
+

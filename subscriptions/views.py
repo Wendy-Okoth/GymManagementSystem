@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+def subscription_list(request):
+    return HttpResponse("Subscriptions list page coming soon!")
+
+def subscription_detail(request, id):
+    return HttpResponse(f"Subscription detail page for subscription {id}")

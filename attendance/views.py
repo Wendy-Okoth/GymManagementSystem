@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+def attendance_log(request):
+    return HttpResponse("Attendance log page coming soon!")

@@ -1,0 +1,11 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">GymEncore</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="{% url 'members:list' %}">Members</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'subscriptions:list' %}">Subscriptions</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'payments:history' %}">Payments</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'attendance:log' %}">Attendance</a></li>
+    </ul>
+  </div>
+</nav>
