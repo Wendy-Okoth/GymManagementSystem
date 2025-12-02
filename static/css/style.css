@@ -1,0 +1,77 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== Body Styling ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8; /* Softer light grey */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  background-color: #0056b3 !important; /* Deeper primary blue */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #ffffff !important;
+}
+
+.nav-link {
+  color: #ffffff !important;
+  margin-right: 15px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #d14781 !important; /* Muted secondary pink */
+}
+
+/* ===== Sections ===== */
+section {
+  padding: 60px 0;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #0056b3; /* Deeper primary blue for headings */
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+  background-color: #0056b3; /* Deeper primary blue */
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #003f7f; /* Even darker blue */
+}
+
+.btn-secondary {
+  background-color: #d14781; /* Muted secondary pink */
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #a83563; /* Deeper muted pink */
+}
+
+/* ===== Footer ===== */
+footer {
+  background-color: #0056b3; /* Deeper primary blue */
+  color: #ffffff;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+
+

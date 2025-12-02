@@ -1,14 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">GymEncore</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'testimonials' %}">Testimonials</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-    </ul>
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/">GymEncore</a>
+
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'testimonials' %}">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
