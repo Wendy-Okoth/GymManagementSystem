@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Signup | GymEncore{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Create an Account</h2>
+  <form>
+    <div class="mb-3">
+      <label for="signupName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="signupName" placeholder="Enter your name">
+    </div>
+    <div class="mb-3">
+      <label for="signupEmail" class="form-label">Email</label>
+      <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email">
+    </div>
+    <div class="mb-3">
+      <label for="signupPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="signupPassword" placeholder="Enter a password">
+    </div>
+    <button type="submit" class="btn btn-primary">Signup</button>
+  </form>
+</div>
+{% endblock %}

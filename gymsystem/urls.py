@@ -26,4 +26,9 @@ urlpatterns = [
     path("payments/", include("payments.urls", namespace="payments")),
     path("attendance/", include("attendance.urls", namespace="attendance")),
     path("instructors/", include("instructors.urls", namespace="instructors")),
+    path("about/", views.about, name="about"),
+    path("testimonials/", views.testimonials, name="testimonials"),
+    path("contact/", views.contact, name="contact"),
+    path("signup/", views.signup, name="signup"),
+    path("login/", views.login, name="login"),
 ]
