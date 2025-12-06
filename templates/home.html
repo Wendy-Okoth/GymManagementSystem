@@ -2,8 +2,56 @@
 {% load static %}
 {% block title %}Home | GymEncore{% endblock %}
 {% block content %}
-<div class="text-center p-5">
+<div class="text-center p-5 bg-light">
   <h1>Welcome to GymEncore</h1>
-  <p>Your all-in-one fitness management system.</p>
+  <p class="lead">Your all-in-one fitness management system.</p>
+</div>
+
+<div class="container mt-5">
+  <div class="row text-center">
+    <!-- Feature 1 -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">Membership Management</h5>
+          <p class="card-text">
+            Easily register new members, track attendance, and manage subscriptions with a streamlined dashboard.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">Instructor Coordination</h5>
+          <p class="card-text">
+            Connect members with instructors, schedule sessions, and monitor progress to maximize training outcomes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">Payments & Reports</h5>
+          <p class="card-text">
+            Securely process payments, generate invoices, and access detailed reports to keep your gym running smoothly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="text-center mt-5">
+    <h3>Ready to transform your gym?</h3>
+    <p>Sign up today and experience the future of fitness management.</p>
+    <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">Get Started</a>
+  </div>
 </div>
 {% endblock %}
+

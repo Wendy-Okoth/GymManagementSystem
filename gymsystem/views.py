@@ -1,31 +1,9 @@
 from django.shortcuts import render, redirect
-from django import forms
 from members.models import Member
 from instructors.models import Instructor
 from django.contrib.auth import logout
-from django.shortcuts import redirect
-
-
-# Signup form
-class SignupForm(forms.Form):
-    ROLE_CHOICES = [
-        ('member', 'Member'),
-        ('instructor', 'Instructor'),
-    ]
-
-    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect)
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    phone_number = forms.CharField(max_length=15)
-    password = forms.CharField(widget=forms.PasswordInput)
-
-    # Extra fields for instructors
-    specialization = forms.CharField(max_length=100, required=False)
-
-    # Extra fields for members
-    workout_time = forms.ChoiceField(choices=Member.WORKOUT_TIMES, required=False)
-
+from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login, authenticate
 
 def home(request):
     return render(request, "home.html")
@@ -41,43 +19,69 @@ def contact(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            role = form.cleaned_data['role']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-            phone_number = form.cleaned_data['phone_number']
+        role = request.POST.get('role')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
 
-            if role == 'member':
-                workout_time = form.cleaned_data['workout_time']
-                Member.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email,
-                    phone_number=phone_number,
-                    workout_time=workout_time
-                )
-                return redirect('member_dashboard')
+        if password != confirm_password:
+            return render(request, "signup.html", {'error': 'Passwords do not match'})
 
-            elif role == 'instructor':
-                specialization = form.cleaned_data['specialization']
-                Instructor.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email,
-                    phone_number=phone_number,
-                    specialization=specialization
-                )
-                return redirect('instructor_dashboard')
-    else:
-        form = SignupForm()
-    return render(request, "signup.html", {'form': form})
+        # Create Django User
+        user = User.objects.create_user(
+            username=email,   # use email as username
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name
+        )
+
+        # Create Member or Instructor profile
+        if role == 'member':
+            workout_time = request.POST.get('workout_time')
+            Member.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                phone_number=phone_number,
+                workout_time=workout_time
+            )
+            auth_login(request, user)
+            return redirect('member_dashboard')
+
+        elif role == 'instructor':
+            specialization = request.POST.get('specialization')
+            Instructor.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                phone_number=phone_number,
+                specialization=specialization
+            )
+            auth_login(request, user)
+            return redirect('instructor_dashboard')
+
+    return render(request, "signup.html")
 
 def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            auth_login(request, user)
+            # Redirect based on role
+            if Member.objects.filter(email=email).exists():
+                return redirect('member_dashboard')
+            elif Instructor.objects.filter(email=email).exists():
+                return redirect('instructor_dashboard')
+        else:
+            return render(request, "login.html", {'error': 'Invalid credentials'})
     return render(request, "login.html")
 
-# gymsystem/views.py
 def member_dashboard(request):
     return render(request, 'member_dashboard.html')
 

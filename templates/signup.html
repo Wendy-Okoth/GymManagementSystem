@@ -4,11 +4,70 @@
 {% block content %}
 <div class="container mt-5">
   <h2>Create an Account</h2>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    <div class="mb-3">
+      <label class="form-label">Role</label><br>
+      <input type="radio" name="role" value="member" required> Member
+      <input type="radio" name="role" value="instructor" required> Instructor
+    </div>
+
+    <div class="mb-3">
+      <label for="first_name" class="form-label">First Name</label>
+      <input type="text" class="form-control" name="first_name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Last Name</label>
+      <input type="text" class="form-control" name="last_name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="phone_number" class="form-label">Phone Number</label>
+      <input type="text" class="form-control" name="phone_number" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="confirm_password" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" name="confirm_password" required>
+    </div>
+
+    <!-- Member-specific -->
+    <div class="mb-3">
+      <label for="workout_time" class="form-label">Preferred Workout Time</label>
+      <select class="form-select" name="workout_time">
+        <option value="MORNING">Morning</option>
+        <option value="AFTERNOON">Afternoon</option>
+        <option value="EVENING">Evening</option>
+        <option value="NIGHT">Night</option>
+      </select>
+    </div>
+
+    <!-- Instructor-specific -->
+    <div class="mb-3">
+      <label for="specialization" class="form-label">Specialization (for instructors)</label>
+      <input type="text" class="form-control" name="specialization">
+    </div>
+
     <button type="submit" class="btn btn-primary">Signup</button>
   </form>
 </div>
 {% endblock %}
+
 
