@@ -14,6 +14,10 @@ from pathlib import Path
 import environ
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -122,4 +126,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")         # from .env
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD") # from .env
 DEFAULT_FROM_EMAIL = env("EMAIL_HOST_USER")
+
+MPESA_CONSUMER_KEY = os.getenv("MPESA_CONSUMER_KEY")
+MPESA_CONSUMER_SECRET = os.getenv("MPESA_CONSUMER_SECRET")
+MPESA_PASSKEY = os.getenv("MPESA_PASSKEY")
+
 

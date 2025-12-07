@@ -4,6 +4,9 @@ from instructors.models import Instructor
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, authenticate
+from django.shortcuts import render
+from .mpesa import initiate_stk_push
+
 
 def home(request):
     return render(request, "home.html")
@@ -92,7 +95,16 @@ def member_sessions(request):
     return render(request, 'member_sessions.html')
 
 def member_payment(request):
-    return render(request, 'member_payment.html')
+    return render(request, 'payment.html')
+
+def member_payment(request):
+    if request.method == "POST":
+        phone_number = request.POST.get("phone_number")
+        amount = request.POST.get("amount")
+        response = initiate_stk_push(phone_number, amount)
+        return render(request, "payment.html", {"response": response})
+    return render(request, "payment.html")
+
 
 def logout_view(request):
     logout(request)
