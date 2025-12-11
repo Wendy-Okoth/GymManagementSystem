@@ -3,57 +3,61 @@
 {% block title %}Contact Us | GymEncore{% endblock %}
 {% block content %}
 <div class="container mt-5">
-  <h2>Contact Us</h2>
-  <form id="contactForm" method="post">
-    {% csrf_token %}
-
-    <div class="mb-3">
-      <label for="first_name" class="form-label">First Name</label>
-      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
+  <div class="card shadow-lg">
+    <div class="card-header text-center bg-light">
+      <img src="{% static 'images/favicon.png' %}" alt="GymEncore Logo" width="60" height="60" class="mb-2">
+      <h2>Contact Us</h2>
     </div>
+    <div class="card-body">
+      <form id="contactForm" method="post">
+        {% csrf_token %}
 
-    <div class="mb-3">
-      <label for="last_name" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" required>
+        <div class="mb-3">
+          <label for="first_name" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="last_name" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Phone Number</label>
+          <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subject" name="subject" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-secondary btn-sm">Send</button>
+      </form>
+
+      <!-- Success Popup -->
+      <div id="successPopup" class="alert alert-success mt-3" style="display:none;">
+        ✅ Your message has been sent successfully!
+      </div>
     </div>
-
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="phone_number" class="form-label">Phone Number</label>
-      <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="subject" class="form-label">Subject</label>
-      <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="message" class="form-label">Message</label>
-      <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write your message here..." required></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-secondary">Send</button>
-  </form>
-</div>
-
-<!-- Success Popup -->
-<div id="successPopup" class="alert alert-success mt-3" style="display:none;">
-  ✅ Your message has been sent successfully!
+  </div>
 </div>
 
 <script>
   document.getElementById("contactForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // prevent immediate form submission
-    document.getElementById("successPopup").style.display = "block"; // show popup
-    // Optionally submit the form after showing popup
-    setTimeout(() => {
-      event.target.submit();
-    }, 1000); // waits 1 second before submitting
+    event.preventDefault();
+    document.getElementById("successPopup").style.display = "block";
+    setTimeout(() => { event.target.submit(); }, 1000);
   });
 </script>
 {% endblock %}

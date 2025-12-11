@@ -8,9 +8,23 @@ class Instructor(models.Model):
         ('OTHER', 'Other'),
     ]
 
+    SPECIALIZATION_CHOICES = [
+        ('WEIGHTLIFTING', 'Weightlifting'),
+        ('CARDIO', 'Cardiovascular Training'),
+        ('YOGA', 'Yoga'),
+        ('PILATES', 'Pilates'),
+        ('HIIT', 'High Intensive Interval Training'),
+        ('FUNCTIONAL', 'Functional Training'),
+        ('GROUP', 'Group Fitness Classes'),
+        ('BODYBUILDING', 'Bodybuilding'),
+        ('POWERLIFTING', 'Powerlifting'),
+        ('FLEXIBILITY', 'Flexibility'),
+        ('ZUMBA', 'Zumba'),
+    ]
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    specialization = models.CharField(max_length=100)  # e.g. Yoga, Weightlifting
+    specialization = models.CharField(max_length=50, choices=SPECIALIZATION_CHOICES)
     phone_number = models.CharField(max_length=15, unique=True)
     email = models.EmailField(unique=True)
 
@@ -18,7 +32,7 @@ class Instructor(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.specialization}"
+        return f"{self.first_name} {self.last_name} - {self.get_specialization_display()}"
 
     @property
     def age(self):

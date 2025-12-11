@@ -16,6 +16,14 @@ class Member(models.Model):
         ('OTHER', 'Other'),
     ]
 
+    SUBSCRIPTION_CHOICES = [
+        ('DAILY', 'Daily'),
+        ('WEEKLY', 'Weekly'),
+        ('MONTHLY', 'Monthly'),
+        ('BIANNUAL', 'Bi-Annual'),
+        ('YEARLY', 'Yearly'),
+    ]
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
@@ -25,8 +33,10 @@ class Member(models.Model):
     join_date = models.DateField(auto_now_add=True)
 
     workout_time = models.CharField(max_length=10, choices=WORKOUT_TIMES)
-    gym_instructor = models.ForeignKey(Instructor, on_delete=models.SET_NULL, null=True, blank=True)
-    subscription = models.ForeignKey('subscriptions.Subscription', on_delete=models.SET_NULL, null=True, blank=True)
+    specialization = models.CharField(max_length=50, choices=Instructor.SPECIALIZATION_CHOICES, null=True, blank=True)
+    gym_instructor = models.ForeignKey(Instructor, on_delete=models.SET_NULL, null=True, blank=True, related_name="members")
+    subscription_plan = models.CharField(max_length=20, choices=SUBSCRIPTION_CHOICES, null=True, blank=True)
+    has_paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -41,8 +51,7 @@ class Member(models.Model):
         )
 
     def is_subscription_active(self):
-        if self.subscription:
-            end_date = self.subscription.calculate_end_date(self.join_date)
-            return date.today() <= end_date
-        return False
+        if not self.subscription_plan:
+            return False
+        return self.has_paid
 

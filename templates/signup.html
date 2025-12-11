@@ -3,99 +3,107 @@
 {% block title %}Signup | GymEncore{% endblock %}
 {% block content %}
 <div class="container mt-5">
-  <h2>Create an Account</h2>
+  <div class="card shadow-lg">
+    <div class="card-header text-center bg-light">
+      <img src="{% static 'images/favicon.png' %}" alt="GymEncore Logo" width="60" height="60" class="mb-2">
+      <h2>Create an Account</h2>
+    </div>
+    <div class="card-body">
+      <!-- Success/Error placeholders -->
+      <div id="successMsg" class="alert alert-success" style="display:none;">
+        ✅ Signup successful! You can now log in.
+      </div>
+      <div id="errorMsg" class="alert alert-danger" style="display:none;">
+        ❌ Signup failed. Please check your details.
+      </div>
 
-  <!-- Success/Error placeholders -->
-  <div id="successMsg" class="alert alert-success" style="display:none;">
-    ✅ Signup successful! You can now log in.
+      <form id="signupForm" method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label">Role</label><br>
+          <input type="radio" name="role" value="member" required> Member
+          <input type="radio" name="role" value="instructor" required> Instructor
+        </div>
+
+        <div class="mb-3">
+          <label for="first_name" class="form-label">First Name</label>
+          <input type="text" class="form-control" name="first_name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="last_name" class="form-label">Last Name</label>
+          <input type="text" class="form-control" name="last_name" required>
+        </div>
+
+        <div class="mb-3">
+       <label class="form-label">Gender</label><br>
+       <input type="radio" name="gender" value="male" required> Male
+       <input type="radio" name="gender" value="female" required> Female
+       </div>
+
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" name="email" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Phone Number</label>
+          <input type="text" class="form-control" name="phone_number" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" name="confirm_password" required>
+        </div>
+
+        <!-- Member-specific -->
+        <div class="mb-3">
+          <label for="workout_time" class="form-label">Preferred Workout Time</label>
+          <select class="form-select" name="workout_time">
+            <option value="MORNING">Morning</option>
+            <option value="AFTERNOON">Afternoon</option>
+            <option value="EVENING">Evening</option>
+            <option value="NIGHT">Night</option>
+          </select>
+        </div>
+
+        <!-- Instructor-specific -->
+        <div class="mb-3">
+          <label for="specialization" class="form-label">Specialization (for instructors)</label>
+          <input type="text" class="form-control" name="specialization">
+        </div>
+
+        <button type="submit" class="btn btn-secondary btn-sm">Signup</button>
+      </form>
+    </div>
   </div>
-  <div id="errorMsg" class="alert alert-danger" style="display:none;">
-    ❌ Signup failed. Please check your details.
-  </div>
-
-  <form id="signupForm" method="post">
-    {% csrf_token %}
-
-    <div class="mb-3">
-      <label class="form-label">Role</label><br>
-      <input type="radio" name="role" value="member" required> Member
-      <input type="radio" name="role" value="instructor" required> Instructor
-    </div>
-
-    <div class="mb-3">
-      <label for="first_name" class="form-label">First Name</label>
-      <input type="text" class="form-control" name="first_name" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="last_name" class="form-label">Last Name</label>
-      <input type="text" class="form-control" name="last_name" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" name="email" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="phone_number" class="form-label">Phone Number</label>
-      <input type="text" class="form-control" name="phone_number" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" name="password" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="confirm_password" class="form-label">Confirm Password</label>
-      <input type="password" class="form-control" name="confirm_password" required>
-    </div>
-
-    <!-- Member-specific -->
-    <div class="mb-3">
-      <label for="workout_time" class="form-label">Preferred Workout Time</label>
-      <select class="form-select" name="workout_time">
-        <option value="MORNING">Morning</option>
-        <option value="AFTERNOON">Afternoon</option>
-        <option value="EVENING">Evening</option>
-        <option value="NIGHT">Night</option>
-      </select>
-    </div>
-
-    <!-- Instructor-specific -->
-    <div class="mb-3">
-      <label for="specialization" class="form-label">Specialization (for instructors)</label>
-      <input type="text" class="form-control" name="specialization">
-    </div>
-
-    <button type="submit" class="btn btn-secondary">Signup</button>
-  </form>
 </div>
 
 <script>
   document.getElementById("signupForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // stop immediate submission
-
+    event.preventDefault();
     const password = document.querySelector("input[name='password']").value;
     const confirmPassword = document.querySelector("input[name='confirm_password']").value;
 
-    // Simple validation
     if (password !== confirmPassword) {
       document.getElementById("errorMsg").style.display = "block";
       document.getElementById("successMsg").style.display = "none";
     } else {
       document.getElementById("successMsg").style.display = "block";
       document.getElementById("errorMsg").style.display = "none";
-
-      // Optionally submit to Django after showing success
-      setTimeout(() => {
-        event.target.submit();
-      }, 1000);
+      setTimeout(() => { event.target.submit(); }, 1000);
     }
   });
 </script>
 {% endblock %}
+
 
 
 

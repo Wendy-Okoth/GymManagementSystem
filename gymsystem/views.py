@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from members.models import Member
 from instructors.models import Instructor
-from django.contrib.auth import logout
+from django.contrib.auth import logout 
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, authenticate
 from django.shortcuts import render
 from .mpesa import initiate_stk_push
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -19,6 +20,20 @@ def testimonials(request):
 
 def contact(request):
     return render(request, "contact.html")
+
+SPECIALIZATION_INSTRUCTORS = {
+    "Weightlifting": {"MALE": "Daniel Mumbua", "FEMALE": "Grace Njeri"},
+    "Cardiovascular Training": {"MALE": "Karanja Kimani", "FEMALE": "Alice Wambui"},
+    "Yoga": {"MALE": "Mwambela Mamba", "FEMALE": "Mary Atieno"},
+    "Pilates": {"MALE": "Wilson Jeffrey", "FEMALE": "Jane Akinyi"},
+    "High Intensive Interval Training": {"MALE": "Maina Mwangi", "FEMALE": "Lucy Chebet"},
+    "Functional Training": {"MALE": "Kevin Otieno", "FEMALE": "Sarah Nyambura"},
+    "Group Fitness Classes": {"MALE": "Christian Chacha", "FEMALE": "Esther Wanjiku"},
+    "Bodybuilding": {"MALE": "Erick Wafula", "FEMALE": "Ann Mwende"},
+    "Powerlifting": {"MALE": "Ezekiel Kuria", "FEMALE": "Joyce Achieng"},
+    "Flexibility": {"MALE": "Simon Mungai", "FEMALE": "Catherine Wairimu"},
+    "Zumba": {"MALE": "Fred Omondi", "FEMALE": "Beatrice Naliaka"},
+}
 
 def signup(request):
     if request.method == 'POST':
@@ -35,22 +50,40 @@ def signup(request):
 
         # Create Django User
         user = User.objects.create_user(
-            username=email,   # use email as username
+            username=email,
             email=email,
             password=password,
             first_name=first_name,
             last_name=last_name
         )
 
-        # Create Member or Instructor profile
         if role == 'member':
             workout_time = request.POST.get('workout_time')
+            gender = request.POST.get('gender')
+            specialization = request.POST.get('specialization')
+            subscription_plan = request.POST.get('subscription_plan')
+
+            # Assign instructor based on specialization + gender
+            instructor_name = SPECIALIZATION_INSTRUCTORS.get(specialization, {}).get(gender, None)
+            instructor_obj = None
+            if instructor_name:
+                instructor_obj, _ = Instructor.objects.get_or_create(
+                    first_name=instructor_name.split()[0],
+                    last_name=" ".join(instructor_name.split()[1:]),
+                    specialization=specialization
+                )
+
             Member.objects.create(
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
                 phone_number=phone_number,
-                workout_time=workout_time
+                workout_time=workout_time,
+                gender=gender,
+                specialization=specialization,
+                gym_instructor=instructor_obj,
+                subscription_plan=subscription_plan,
+                has_paid=False
             )
             auth_login(request, user)
             return redirect('member_dashboard')
@@ -105,6 +138,10 @@ def member_payment(request):
         return render(request, "payment.html", {"response": response})
     return render(request, "payment.html")
 
+@login_required
+def profile(request):
+    member = Member.objects.filter(email=request.user.email).first()
+    return render(request, "profile.html", {"member": member})
 
 def logout_view(request):
     logout(request)

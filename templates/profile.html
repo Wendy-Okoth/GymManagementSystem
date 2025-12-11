@@ -1,0 +1,20 @@
+{% extends "base_member.html" %}
+{% block title %}Profile | GymEncore{% endblock %}
+{% block content %}
+<div class="container mt-5 text-center">
+  <h2>Welcome, {{ member.first_name }} {{ member.last_name }}!</h2>
+  <p><strong>Gender:</strong> {{ member.gender }}</p>
+  <p><strong>Preferred Workout Time:</strong> {{ member.workout_time }}</p>
+  <p><strong>Specialization:</strong> {{ member.specialization }}</p>
+  <p><strong>Assigned Instructor:</strong> {{ member.gym_instructor }}</p>
+  <p><strong>Subscription Plan:</strong> {{ member.subscription_plan }}</p>
+  <p><strong>Payment Status:</strong>
+    {% if member.has_paid %}
+      ✅ Paid
+    {% else %}
+      ❌ Not Paid
+    {% endif %}
+  </p>
+</div>
+{% endblock %}
+
