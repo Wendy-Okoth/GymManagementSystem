@@ -7,6 +7,7 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.shortcuts import render
 from .mpesa import initiate_stk_push
 from django.contrib.auth.decorators import login_required
+import re
 
 
 def home(request):
@@ -42,11 +43,19 @@ def signup(request):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         phone_number = request.POST.get('phone_number')
+        gender = request.POST.get('gender')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
+        strong_password_regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$')
+
         if password != confirm_password:
-            return render(request, "signup.html", {'error': 'Passwords do not match'})
+            return render(request, "signup.html", {'error': 'Passwords do not match.'})
+
+        if not strong_password_regex.match(password):
+            return render(request, "signup.html", {
+                'error': 'Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.'
+            })
 
         # Create Django User
         user = User.objects.create_user(
@@ -59,9 +68,10 @@ def signup(request):
 
         if role == 'member':
             workout_time = request.POST.get('workout_time')
-            gender = request.POST.get('gender')
             specialization = request.POST.get('specialization')
             subscription_plan = request.POST.get('subscription_plan')
+
+            specialization = specialization.title()
 
             # Assign instructor based on specialization + gender
             instructor_name = SPECIALIZATION_INSTRUCTORS.get(specialization, {}).get(gender, None)
@@ -70,7 +80,8 @@ def signup(request):
                 instructor_obj, _ = Instructor.objects.get_or_create(
                     first_name=instructor_name.split()[0],
                     last_name=" ".join(instructor_name.split()[1:]),
-                    specialization=specialization
+                    specialization=specialization,
+                    gender=gender
                 )
 
             Member.objects.create(
@@ -90,12 +101,14 @@ def signup(request):
 
         elif role == 'instructor':
             specialization = request.POST.get('specialization')
+            specialization = specialization.title()
             Instructor.objects.create(
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
                 phone_number=phone_number,
-                specialization=specialization
+                specialization=specialization,
+                gender=gender
             )
             auth_login(request, user)
             return redirect('instructor_dashboard')

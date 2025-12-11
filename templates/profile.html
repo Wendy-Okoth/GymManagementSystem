@@ -1,20 +1,33 @@
 {% extends "base_member.html" %}
 {% block title %}Profile | GymEncore{% endblock %}
 {% block content %}
-<div class="container mt-5 text-center">
-  <h2>Welcome, {{ member.first_name }} {{ member.last_name }}!</h2>
-  <p><strong>Gender:</strong> {{ member.gender }}</p>
-  <p><strong>Preferred Workout Time:</strong> {{ member.workout_time }}</p>
-  <p><strong>Specialization:</strong> {{ member.specialization }}</p>
-  <p><strong>Assigned Instructor:</strong> {{ member.gym_instructor }}</p>
-  <p><strong>Subscription Plan:</strong> {{ member.subscription_plan }}</p>
-  <p><strong>Payment Status:</strong>
-    {% if member.has_paid %}
-      ✅ Paid
-    {% else %}
-      ❌ Not Paid
-    {% endif %}
-  </p>
+<div class="container mt-5">
+  <div class="card shadow-lg mx-auto" style="max-width: 500px;">
+    <div class="card-header text-center bg-light">
+      <h2>Welcome, {{ member.first_name }} {{ member.last_name }}!</h2>
+    </div>
+    <div class="card-body text-start">
+      <p><strong>Gender:</strong> {{ member.gender|title }}</p>
+      <p><strong>Preferred Workout Time:</strong> {{ member.workout_time|title }}</p>
+      <p><strong>Specialization:</strong> {{ member.specialization|title }}</p>
+      <p><strong>Assigned Instructor:</strong> 
+        {% if member.gym_instructor %}
+          {{ member.gym_instructor.first_name }} {{ member.gym_instructor.last_name }}
+        {% else %}
+          None
+        {% endif %}
+      </p>
+      <p><strong>Subscription Plan:</strong> {{ member.subscription_plan|title }}</p>
+      <p><strong>Payment Status:</strong>
+        {% if member.has_paid %}
+          ✅ Paid
+        {% else %}
+          ❌ Not Paid
+        {% endif %}
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock %}
+
 

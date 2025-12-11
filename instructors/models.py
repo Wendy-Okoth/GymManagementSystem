@@ -32,7 +32,8 @@ class Instructor(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.get_specialization_display()}"
+        return f"{self.first_name} {self.last_name}"
+
 
     @property
     def age(self):

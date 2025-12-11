@@ -20,44 +20,52 @@
       <form id="signupForm" method="post">
         {% csrf_token %}
 
+        <!-- Role -->
         <div class="mb-3">
           <label class="form-label">Role</label><br>
           <input type="radio" name="role" value="member" required> Member
           <input type="radio" name="role" value="instructor" required> Instructor
         </div>
 
+        <!-- First Name -->
         <div class="mb-3">
           <label for="first_name" class="form-label">First Name</label>
           <input type="text" class="form-control" name="first_name" required>
         </div>
 
+        <!-- Last Name -->
         <div class="mb-3">
           <label for="last_name" class="form-label">Last Name</label>
           <input type="text" class="form-control" name="last_name" required>
         </div>
 
+        <!-- Gender -->
         <div class="mb-3">
-       <label class="form-label">Gender</label><br>
-       <input type="radio" name="gender" value="male" required> Male
-       <input type="radio" name="gender" value="female" required> Female
-       </div>
+          <label class="form-label">Gender</label><br>
+          <input type="radio" name="gender" value="MALE" required> Male
+          <input type="radio" name="gender" value="FEMALE" required> Female
+          <input type="radio" name="gender" value="OTHER" required> Other
+        </div>
 
-
+        <!-- Email -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" class="form-control" name="email" required>
         </div>
 
+        <!-- Phone -->
         <div class="mb-3">
           <label for="phone_number" class="form-label">Phone Number</label>
           <input type="text" class="form-control" name="phone_number" required>
         </div>
 
+        <!-- Password -->
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" name="password" required>
         </div>
 
+        <!-- Confirm Password -->
         <div class="mb-3">
           <label for="confirm_password" class="form-label">Confirm Password</label>
           <input type="password" class="form-control" name="confirm_password" required>
@@ -74,12 +82,36 @@
           </select>
         </div>
 
-        <!-- Instructor-specific -->
         <div class="mb-3">
-          <label for="specialization" class="form-label">Specialization (for instructors)</label>
-          <input type="text" class="form-control" name="specialization">
+          <label for="subscription_plan" class="form-label">Subscription Plan</label>
+          <select class="form-select" name="subscription_plan">
+            <option value="DAILY">Daily</option>
+            <option value="WEEKLY">Weekly</option>
+            <option value="MONTHLY">Monthly</option>
+            <option value="BIANNUAL">Bi-Annual</option>
+            <option value="YEARLY">Yearly</option>
+          </select>
         </div>
 
+        <!-- Instructor-specific -->
+        <div class="mb-3">
+          <label for="specialization" class="form-label">Specialization</label>
+          <select class="form-select" name="specialization">
+            <option value="WEIGHTLIFTING">Weightlifting</option>
+            <option value="CARDIO">Cardiovascular Training</option>
+            <option value="YOGA">Yoga</option>
+            <option value="PILATES">Pilates</option>
+            <option value="HIIT">High Intensive Interval Training</option>
+            <option value="FUNCTIONAL">Functional Training</option>
+            <option value="GROUP">Group Fitness Classes</option>
+            <option value="BODYBUILDING">Bodybuilding</option>
+            <option value="POWERLIFTING">Powerlifting</option>
+            <option value="FLEXIBILITY">Flexibility</option>
+            <option value="ZUMBA">Zumba</option>
+          </select>
+        </div>
+
+        <!-- Submit -->
         <button type="submit" class="btn btn-secondary btn-sm">Signup</button>
       </form>
     </div>
@@ -92,17 +124,32 @@
     const password = document.querySelector("input[name='password']").value;
     const confirmPassword = document.querySelector("input[name='confirm_password']").value;
 
+    // Strong password regex: min 8 chars, uppercase, lowercase, number, special char
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
     if (password !== confirmPassword) {
+      document.getElementById("errorMsg").innerText = "❌ Passwords do not match.";
       document.getElementById("errorMsg").style.display = "block";
       document.getElementById("successMsg").style.display = "none";
-    } else {
-      document.getElementById("successMsg").style.display = "block";
-      document.getElementById("errorMsg").style.display = "none";
-      setTimeout(() => { event.target.submit(); }, 1000);
+      return;
     }
+
+    if (!strongPasswordRegex.test(password)) {
+      document.getElementById("errorMsg").innerText =
+        "❌ Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.";
+      document.getElementById("errorMsg").style.display = "block";
+      document.getElementById("successMsg").style.display = "none";
+      return;
+    }
+
+    document.getElementById("successMsg").style.display = "block";
+    document.getElementById("errorMsg").style.display = "none";
+    setTimeout(() => { event.target.submit(); }, 1000);
   });
 </script>
 {% endblock %}
+
+
 
 
 
