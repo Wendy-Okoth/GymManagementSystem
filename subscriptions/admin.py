@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from .models import Subscription
 
@@ -21,3 +20,5 @@ class SubscriptionAdmin(admin.ModelAdmin):
             return "365 days"
         return "-"
     duration_display.short_description = "Duration"
+
+

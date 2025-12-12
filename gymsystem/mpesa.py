@@ -39,3 +39,4 @@ def initiate_stk_push(phone_number, amount):
 
     response = requests.post(api_url, json=payload, headers=headers)
     return response.json()
+

@@ -8,7 +8,9 @@ from django.shortcuts import render
 from .mpesa import initiate_stk_push
 from django.contrib.auth.decorators import login_required
 import re
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 def home(request):
     return render(request, "home.html")
@@ -140,17 +142,69 @@ def member_profile(request):
 def member_sessions(request):
     return render(request, 'member_sessions.html')
 
-def member_payment(request):
-    return render(request, 'payment.html')
+import datetime
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from members.models import Member
+from payments.models import Payment
 
 def member_payment(request):
+    member = Member.objects.get(email=request.user.email)
+
+    plan_amounts = {
+        "DAILY": 400,
+        "WEEKLY": 1000,
+        "MONTHLY": 3000,
+        "BIANNUAL": 16000,
+        "YEARLY": 30000,
+    }
+
+    # Normalize the plan value to uppercase so it matches the dict keys
+    plan_key = (member.subscription_plan or "").upper()
+    auto_amount = plan_amounts.get(plan_key, 0)
+
     if request.method == "POST":
         phone_number = request.POST.get("phone_number")
-        amount = request.POST.get("amount")
-        response = initiate_stk_push(phone_number, amount)
-        return render(request, "payment.html", {"response": response})
-    return render(request, "payment.html")
+        amount = auto_amount
 
+        # Call Daraja API
+        response = initiate_stk_push(phone_number, amount)
+
+        # Handle response gracefully
+        if response.get("errorCode") == "500.003.02":
+            message = "M-Pesa system is busy. Please try again in a few minutes."
+
+        elif response.get("ResponseCode") == "0":
+            # ✅ Payment successful
+            member.has_paid = True
+            member.subscription_expiry = member.calculate_expiry()  # auto-calc expiry
+            member.save()
+
+            # Save payment record
+            Payment.objects.create(
+                member=member,
+                subscription_plan=member.subscription_plan,
+                amount=amount,
+                method="M-Pesa",
+                payment_date=datetime.date.today()
+            )
+
+            message = "Payment successful! Please check your phone to enter your M-Pesa PIN."
+            messages.success(request, message)
+            return redirect("member_sessions")  # redirect to sessions calendar
+
+        else:
+            message = f"Payment failed: {response.get('errorMessage', 'Unknown error')}"
+            messages.error(request, message)
+
+        return render(
+            request,
+            "payment.html",
+            {"member": member, "response": message, "auto_amount": auto_amount},
+        )
+
+    return render(request, "payment.html", {"member": member, "auto_amount": auto_amount})
+    
 @login_required
 def profile(request):
     member = Member.objects.filter(email=request.user.email).first()

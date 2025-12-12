@@ -2,36 +2,44 @@
 {% block title %}Payment | GymEncore{% endblock %}
 {% block content %}
 <div class="container mt-5">
-  <h2>Payment</h2>
+  <div class="card shadow-lg mx-auto" style="max-width: 600px;">
+    <div class="card-header bg-light text-center">
+      <h2>Payment</h2>
+    </div>
+    <div class="card-body">
+      
+      <!-- Payment Plans -->
+      <div class="alert alert-secondary">
+        <strong>Payment Plans:</strong><br>
+        • Daily: 400 Ksh<br>
+        • Weekly: 1,000 Ksh<br>
+        • Monthly: 3,000 Ksh<br>
+        • Bi-Annually: 16,000 Ksh<br>
+        • Annually: 30,000 Ksh
+      </div>
 
-  <!-- Payment Plans -->
-  <div class="alert alert-secondary">
-    <strong>Payment Plans:</strong><br>
-    • Daily: 400 Ksh<br>
-    • Weekly: 1,000 Ksh<br>
-    • Monthly: 3,000 Ksh<br>
-    • Bi-Annually: 16,000 Ksh<br>
-    • Annually: 30,000 Ksh
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Phone Number (2547...)</label>
+          <input type="text" class="form-control" name="phone_number" required>
+        </div>
+        <div class="mb-3">
+          <label for="amount" class="form-label">Amount</label>
+          <!-- Auto-filled from view -->
+          <input type="number" class="form-control" name="amount" value="{{ auto_amount }}" readonly>
+        </div>
+        <button type="submit" class="btn btn-secondary w-20">Pay with M-Pesa</button>
+      </form>
+
+      {% if response %}
+        <div class="alert alert-info mt-3">
+          {{ response }}
+        </div>
+      {% endif %}
+    </div>
   </div>
-
-  <form method="post">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="phone_number" class="form-label">Phone Number (2547...)</label>
-      <input type="text" class="form-control" name="phone_number" required>
-    </div>
-    <div class="mb-3">
-      <label for="amount" class="form-label">Amount</label>
-      <input type="number" class="form-control" name="amount" required>
-    </div>
-    <button type="submit" class="btn btn-secondary">Pay with M-Pesa</button>
-  </form>
-
-  {% if response %}
-    <div class="alert alert-info mt-3">
-      {{ response }}
-    </div>
-  {% endif %}
 </div>
 {% endblock %}
+
 
