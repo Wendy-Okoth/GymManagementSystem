@@ -7,10 +7,16 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.shortcuts import render
 from .mpesa import initiate_stk_push
 from django.contrib.auth.decorators import login_required
-import re
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.contrib import messages
+from payments.models import Payment
+from django.contrib import messages
+from payments.models import Payment
+from subscriptions.models import Subscription
 import json
+import datetime
+import re
 
 def home(request):
     return render(request, "home.html")
@@ -139,15 +145,6 @@ def member_dashboard(request):
 def member_profile(request):
     return render(request, 'member_profile.html')
 
-def member_sessions(request):
-    return render(request, 'member_sessions.html')
-
-import datetime
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from members.models import Member
-from payments.models import Payment
-
 def member_payment(request):
     member = Member.objects.get(email=request.user.email)
 
@@ -180,13 +177,15 @@ def member_payment(request):
             member.subscription_expiry = member.calculate_expiry()  # auto-calc expiry
             member.save()
 
+            # Find matching Subscription object
+            subscription_obj = Subscription.objects.filter(plan_type=member.subscription_plan).first()
+
             # Save payment record
             Payment.objects.create(
                 member=member,
-                subscription_plan=member.subscription_plan,
+                subscription=subscription_obj,   # ✅ correct FK
                 amount=amount,
-                method="M-Pesa",
-                payment_date=datetime.date.today()
+                method="MPESA"                   # match choices in Payment model
             )
 
             message = "Payment successful! Please check your phone to enter your M-Pesa PIN."

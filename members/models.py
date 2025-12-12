@@ -53,20 +53,22 @@ class Member(models.Model):
         )
 
     def calculate_expiry(self):
-        """Calculate expiry date based on plan and join_date."""
+        """Calculate expiry date based on plan and payment status."""
         if not self.subscription_plan or not self.has_paid:
             return None
 
         start = date.today()
-        if self.subscription_plan == 'DAILY':
+        plan = self.subscription_plan.upper()
+
+        if plan == 'DAILY':
             return start + timedelta(days=1)
-        elif self.subscription_plan == 'WEEKLY':
+        elif plan == 'WEEKLY':
             return start + timedelta(days=7)
-        elif self.subscription_plan == 'MONTHLY':
+        elif plan == 'MONTHLY':
             return start + timedelta(days=30)
-        elif self.subscription_plan == 'BIANNUAL':
+        elif plan in ['BIANNUAL', 'BI_ANNUAL']:
             return start + timedelta(days=180)
-        elif self.subscription_plan == 'YEARLY':
+        elif plan in ['YEARLY', 'ANNUAL']:
             return start + timedelta(days=365)
         return None
 

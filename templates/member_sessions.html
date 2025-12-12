@@ -6,32 +6,49 @@
   <h2>Your Upcoming Sessions</h2>
 
   {% if sessions %}
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Date</th>
-          <th>Day</th>
-          <th>Trainer</th>
-          <th>Workout Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for s in sessions %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ s.date|date:"Y-m-d" }}</td>
-            <td>{{ s.day }}</td>
-            <td>{{ s.trainer }}</td>
-            <td>{{ s.time }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="calendar-grid">
+      {% for s in sessions %}
+        <div class="calendar-day">
+          <div class="date">{{ s.date|date:"M d" }}</div>
+          <div class="day">{{ s.day }}</div>
+          <div class="trainer">{{ s.trainer }}</div>
+          <div class="time">{{ s.time }}</div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Legend / Key -->
+    <div class="mt-4">
+      <h5>Key</h5>
+      <ul>
+        <li><span class="badge bg-primary">Morning</span> 7:00 AM – 10:00 AM</li>
+        <li><span class="badge bg-success">Afternoon</span> 12:00 PM – 3:00 PM</li>
+        <li><span class="badge bg-warning">Evening</span> 4:00 PM – 7:00 PM</li>
+        <li><span class="badge bg-dark">Night</span> 9:00 PM – 12:00 AM</li>
+      </ul>
+    </div>
   {% else %}
     <div class="alert alert-warning">
       No sessions available. Please complete payment to unlock your calendar.
     </div>
   {% endif %}
 </div>
+
+<style>
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 days per row */
+    gap: 10px;
+  }
+  .calendar-day {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    text-align: center;
+  }
+  .calendar-day .date {
+    font-weight: bold;
+  }
+</style>
 {% endblock %}
