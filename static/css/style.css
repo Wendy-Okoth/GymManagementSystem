@@ -73,5 +73,31 @@ footer {
   margin-top: 40px;
 }
 
+/* static/css/style.css */
+#calendar {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+.fc {
+    height: 600px !important;
+}
+
+/* For even smaller calendar */
+.fc-compact {
+    height: 500px !important;
+}
+
+.fc .fc-toolbar {
+    padding: 10px 0;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.5em;
+}
 
 

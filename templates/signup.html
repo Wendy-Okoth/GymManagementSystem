@@ -20,13 +20,6 @@
       <form id="signupForm" method="post">
         {% csrf_token %}
 
-        <!-- Role -->
-        <div class="mb-3">
-          <label class="form-label">Role</label><br>
-          <input type="radio" name="role" value="member" required> Member
-          <input type="radio" name="role" value="instructor" required> Instructor
-        </div>
-
         <!-- First Name -->
         <div class="mb-3">
           <label for="first_name" class="form-label">First Name</label>

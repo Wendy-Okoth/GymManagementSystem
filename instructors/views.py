@@ -1,12 +1,18 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from .models import Instructor
 
 def instructor_list(request):
-    return HttpResponse("Instructors list page coming soon!")
+    instructors = Instructor.objects.all()
+    return render(request, 'instructors/instructor_list.html', {'instructors': instructors})
 
 def instructor_detail(request, id):
-    return HttpResponse(f"Instructor detail page for instructor {id}")
+    instructor = get_object_or_404(Instructor, id=id)
+    return render(request, 'instructors/instructor_detail.html', {'instructor': instructor})
 
 def instructor_dashboard(request):
-    return render(request, 'instructor_dashboard.html')
+    instructor_id = request.session.get('instructor_id')
+    if not instructor_id:
+        return redirect('login')
+    instructor = Instructor.objects.get(id=instructor_id)
+    return render(request, 'instructor_dashboard.html', {'instructor': instructor})
 

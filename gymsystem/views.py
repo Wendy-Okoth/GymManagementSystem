@@ -46,7 +46,6 @@ SPECIALIZATION_INSTRUCTORS = {
 
 def signup(request):
     if request.method == 'POST':
-        role = request.POST.get('role')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
@@ -65,7 +64,7 @@ def signup(request):
                 'error': 'Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.'
             })
 
-        # Create Django User
+        # Create Django User for authentication
         user = User.objects.create_user(
             username=email,
             email=email,
@@ -74,52 +73,34 @@ def signup(request):
             last_name=last_name
         )
 
-        if role == 'member':
-            workout_time = request.POST.get('workout_time')
-            specialization = request.POST.get('specialization')
-            subscription_plan = request.POST.get('subscription_plan')
+        # Member-specific fields
+        workout_time = request.POST.get('workout_time')
+        specialization = request.POST.get('specialization')
+        subscription_plan = request.POST.get('subscription_plan')
 
-            specialization = specialization.title()
+        specialization = specialization.title()
 
-            # Assign instructor based on specialization + gender
-            instructor_name = SPECIALIZATION_INSTRUCTORS.get(specialization, {}).get(gender, None)
-            instructor_obj = None
-            if instructor_name:
-                instructor_obj, _ = Instructor.objects.get_or_create(
-                    first_name=instructor_name.split()[0],
-                    last_name=" ".join(instructor_name.split()[1:]),
-                    specialization=specialization,
-                    gender=gender
-                )
+        # Assign instructor if available
+        instructor_obj = Instructor.objects.filter(
+            specialization=specialization,
+            gender=gender
+        ).first()
 
-            Member.objects.create(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                phone_number=phone_number,
-                workout_time=workout_time,
-                gender=gender,
-                specialization=specialization,
-                gym_instructor=instructor_obj,
-                subscription_plan=subscription_plan,
-                has_paid=False
-            )
-            auth_login(request, user)
-            return redirect('member_dashboard')
+        Member.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            workout_time=workout_time,
+            gender=gender,
+            specialization=specialization,
+            gym_instructor=instructor_obj,
+            subscription_plan=subscription_plan,
+            has_paid=False
+        )
 
-        elif role == 'instructor':
-            specialization = request.POST.get('specialization')
-            specialization = specialization.title()
-            Instructor.objects.create(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                phone_number=phone_number,
-                specialization=specialization,
-                gender=gender
-            )
-            auth_login(request, user)
-            return redirect('instructor_dashboard')
+        auth_login(request, user)
+        return redirect('member_dashboard')
 
     return render(request, "signup.html")
 
@@ -127,16 +108,26 @@ def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+
+        # Try Member (Django User)
         user = authenticate(request, username=email, password=password)
-        if user is not None:
+        if user is not None and Member.objects.filter(email=email).exists():
             auth_login(request, user)
-            # Redirect based on role
-            if Member.objects.filter(email=email).exists():
-                return redirect('member_dashboard')
-            elif Instructor.objects.filter(email=email).exists():
+            return redirect('member_dashboard')
+
+        # Try Instructor (custom model)
+        try:
+            instructor = Instructor.objects.get(email=email)
+            if instructor.check_password(password):
+                request.session['instructor_id'] = instructor.id
                 return redirect('instructor_dashboard')
-        else:
-            return render(request, "login.html", {'error': 'Invalid credentials'})
+            else:
+                messages.error(request, "Invalid password")
+        except Instructor.DoesNotExist:
+            messages.error(request, "Account not found")
+
+        return render(request, "login.html")
+
     return render(request, "login.html")
 
 def member_dashboard(request):

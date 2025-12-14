@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path , include
 from . import views
@@ -30,6 +29,7 @@ urlpatterns = [
     path("mpesa/callback/", mpesa_callback, name="mpesa_callback"),
     path('logout/', views.logout_view, name='logout'),
 ]
+
 
 
 
