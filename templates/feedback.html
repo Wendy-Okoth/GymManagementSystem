@@ -1,11 +1,51 @@
 {% extends "base_member.html" %}
 {% block content %}
-<div class="container mt-4">
-  <h2>Give Feedback</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Submit Feedback</button>
-  </form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">💬 Give Feedback</h4>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+
+            <!-- Rating -->
+            <div class="mb-3">
+              <label class="form-label d-block mb-2">Rating</label>
+              <div class="d-flex flex-row gap-3">
+                {% for radio in form.rating %}
+                  <div class="form-check">
+                    {{ radio.tag }}
+                    <label class="form-check-label">
+                      {{ radio.choice_label }} ⭐
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Comment -->
+            <div class="mb-3">
+              <label for="id_comment" class="form-label d-block mb-2">Review</label>
+              {{ form.comment }}
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-success">Submit Feedback</button>
+              <a href="{% url 'feedback_list' %}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
+
+
+
+
+ 
