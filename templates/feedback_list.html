@@ -1,0 +1,23 @@
+{% extends "base_member.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Your Feedback</h2>
+  <a href="{% url 'feedback_create' %}" class="btn btn-success mb-3">Add New Feedback</a>
+  <ul class="list-group">
+    {% for fb in feedbacks %}
+      <li class="list-group-item">
+        <strong>{{ fb.attendance }} - {{ fb.instructor }}</strong><br>
+        Rating: {{ fb.rating }} ⭐ | Thumbs Up: {{ fb.thumbs_up }}<br>
+        {{ fb.comment }}<br>
+        <small>Created: {{ fb.created_at }}</small>
+        <div class="mt-2">
+          <a href="{% url 'feedback_edit' fb.id %}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="{% url 'feedback_delete' fb.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No feedback yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

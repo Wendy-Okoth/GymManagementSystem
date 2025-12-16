@@ -27,8 +27,10 @@ urlpatterns = [
     path('sessions/', member_views.member_sessions, name='member_sessions'),   # ✅ fixed
     path('payment/', system_views.member_payment, name='member_payment'),      # ✅ fixed
     path("mpesa/callback/", mpesa_callback, name="mpesa_callback"),
+    path('feedback/', include('feedback.urls')),
     path('logout/', views.logout_view, name='logout'),
 ]
+
 
 
 

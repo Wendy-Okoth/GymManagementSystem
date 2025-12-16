@@ -1,0 +1,11 @@
+{% extends "base_member.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Give Feedback</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+  </form>
+</div>
+{% endblock %}
