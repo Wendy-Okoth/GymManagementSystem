@@ -78,14 +78,22 @@ def signup(request):
         specialization = request.POST.get('specialization')
         subscription_plan = request.POST.get('subscription_plan')
 
-        specialization = specialization.title()
+        # Normalize specialization to match dict keys
+        specialization = specialization.strip().title()
 
-        # Assign instructor if available
-        instructor_obj = Instructor.objects.filter(
-            specialization=specialization,
-            gender=gender
-        ).first()
+        # ✅ Assign instructor using mapping
+        instructor_name = SPECIALIZATION_INSTRUCTORS.get(specialization, {}).get(gender)
+        instructor_obj = None
+        if instructor_name:
+            # Split into first and last name for lookup
+            parts = instructor_name.split()
+            if len(parts) >= 2:
+                instructor_obj = Instructor.objects.filter(
+                    first_name__iexact=parts[0],
+                    last_name__iexact=parts[-1]
+                ).first()
 
+        # Create Member record
         Member.objects.create(
             first_name=first_name,
             last_name=last_name,
@@ -103,6 +111,7 @@ def signup(request):
         return redirect('member_dashboard')
 
     return render(request, "signup.html")
+
 
 def login(request):
     if request.method == 'POST':
