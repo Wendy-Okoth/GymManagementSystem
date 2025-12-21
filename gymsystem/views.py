@@ -38,7 +38,7 @@ SPECIALIZATION_INSTRUCTORS = {
     "High Intensive Interval Training": {"MALE": "Maina Mwangi", "FEMALE": "Lucy Chebet"},
     "Functional Training": {"MALE": "Kevin Otieno", "FEMALE": "Sarah Nyambura"},
     "Group Fitness Classes": {"MALE": "Christian Chacha", "FEMALE": "Esther Wanjiku"},
-    "Bodybuilding": {"MALE": "Erick Wafula", "FEMALE": "Ann Mwende"},
+    "Bodybuilding": {"MALE": "Eric Wafula", "FEMALE": "Ann Mwende"},
     "Powerlifting": {"MALE": "Ezekiel Kuria", "FEMALE": "Joyce Achieng"},
     "Flexibility": {"MALE": "Simon Mungai", "FEMALE": "Catherine Wairimu"},
     "Zumba": {"MALE": "Fred Omondi", "FEMALE": "Beatrice Naliaka"},
