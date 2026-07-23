@@ -1,60 +1,105 @@
 {% extends "base.html" %}
+
 {% block title %}About Us | GymEncore{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
+<div class="max-w-5xl mx-auto space-y-12 py-4">
 
-  <!-- About Us Card -->
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="card-title">About Us</h5>
-      <p class="card-text">
-        GymEncore simplifies gym operations by integrating membership management, instructor coordination,
-        subscriptions, payments, and attendance tracking. Our platform is designed to empower gyms with
-        seamless digital solutions, ensuring members and instructors enjoy a smooth and connected experience.
-      </p>
+    <!-- Header Section -->
+    <div class="text-center space-y-4">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-encore-primary/10 border border-encore-primary/20 rounded-full text-encore-primary text-xs font-bold uppercase tracking-widest">
+            <i class="fas fa-dumbbell text-xs"></i>
+            <span>Redefining Fitness Management</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+            About <span class="text-encore-primary">GymEncore</span>
+        </h1>
+        <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            Powering modern fitness centers with automated scheduling, membership administration, and real-time operational analytics.
+        </p>
     </div>
-  </div>
 
-  <!-- Location Card -->
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Our Location</h5>
-      <p class="card-text">
-        GymEncore is proudly based at <strong>Encore Gym Fitness Studio</strong> in Buruburu, Nairobi.
-      </p>
-      <address class="card-text">
-        2nd Floor, Quickmart Buruburu Building<br>
-        Suite No. 228, Buruburu Phase 3<br>
-        Mumias South Road, Nairobi
-      </address>
-    </div>
-  </div>
+    <!-- Core Platform Info Grid -->
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- About Us Card -->
+        <div class="bg-slate-800/60 rounded-2xl p-8 border border-slate-700/60 shadow-xl backdrop-blur-sm relative overflow-hidden group hover:border-encore-primary/50 transition duration-300">
+            <div class="w-12 h-12 bg-encore-primary/10 rounded-xl flex items-center justify-center text-encore-primary text-xl mb-6 group-hover:scale-110 transition duration-300">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Seamless Gym Operations</h3>
+            <p class="text-slate-400 leading-relaxed text-sm">
+                GymEncore integrates essential workout management tools into one unified platform. From member check-ins and personal training session bookings to recurring subscription payments and trainer coordination, we help studio managers focus on results.
+            </p>
+        </div>
 
-  <!-- Mission Card -->
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Our Mission</h5>
-      <p class="card-text">
-        To revolutionize fitness management by providing a user-friendly system that enhances member engagement,
-        supports instructors, and streamlines administrative tasks. We aim to make fitness accessible, organized,
-        and motivating for everyone involved.
-      </p>
+        <!-- Location Card -->
+        <div class="bg-slate-800/60 rounded-2xl p-8 border border-slate-700/60 shadow-xl backdrop-blur-sm relative overflow-hidden group hover:border-encore-primary/50 transition duration-300">
+            <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500 text-xl mb-6 group-hover:scale-110 transition duration-300">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Our Home Facility</h3>
+            <p class="text-slate-400 leading-relaxed text-sm mb-4">
+                Engineered and tested on-site at <strong class="text-white">Encore Gym Fitness Studio</strong> in Buruburu, Nairobi:
+            </p>
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/40 text-slate-300 text-xs leading-relaxed space-y-1">
+                <p class="font-bold text-white">Quickmart Buruburu Building</p>
+                <p>2nd Floor, Suite No. 228</p>
+                <p>Mumias South Road, Phase 3 — Nairobi, Kenya</p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Vision Card -->
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Our Vision</h5>
-      <p class="card-text">
-        To become the leading digital platform for gyms and fitness centers across Africa and beyond,
-        fostering healthier communities through technology-driven fitness solutions and sustainable growth.
-      </p>
+    <!-- Mission & Vision Dual Banner -->
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Mission Card -->
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700/80 shadow-xl relative">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                    <i class="fas fa-bullseye text-lg"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Our Mission</h3>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">
+                To revolutionize physical fitness administration by delivering intuitive software that strengthens member loyalty, simplifies instructor workflows, and reduces operational overhead.
+            </p>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700/80 shadow-xl relative">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
+                    <i class="fas fa-eye text-lg"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Our Vision</h3>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">
+                To become Africa's premier digital infrastructure for fitness studios and athletic clubs, enabling healthier communities through technological innovation and automated health tracking.
+            </p>
+        </div>
     </div>
-  </div>
+
+    <!-- Key Pillars Section -->
+    <div class="pt-6 border-t border-slate-800">
+        <h4 class="text-center text-xs font-bold uppercase tracking-widest text-slate-500 mb-8">Platform Fundamentals</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i class="fas fa-users text-encore-primary text-xl mb-2"></i>
+                <p class="text-white text-xs font-bold">Member Portal</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i class="fas fa-calendar-check text-encore-primary text-xl mb-2"></i>
+                <p class="text-white text-xs font-bold">Session Scheduling</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i class="fas fa-credit-card text-encore-primary text-xl mb-2"></i>
+                <p class="text-white text-xs font-bold">Automated Billing</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i class="fas fa-chart-line text-encore-primary text-xl mb-2"></i>
+                <p class="text-white text-xs font-bold">Progress Analytics</p>
+            </div>
+        </div>
+    </div>
 
 </div>
-
 {% endblock %}
-
-

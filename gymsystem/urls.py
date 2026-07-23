@@ -6,29 +6,34 @@ from members import views as member_views
 from instructors import views as instructor_views
 from payments.views import mpesa_callback
 
+# Cleaned Main urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.home, name="home"),
+    
+    # App Namespaces
     path("members/", include(("members.urls", "members"), namespace="members")),
     path("subscriptions/", include(("subscriptions.urls", "subscriptions"), namespace="subscriptions")),
     path("payments/", include(("payments.urls", "payments"), namespace="payments")),
     path("attendance/", include(("attendance.urls", "attendance"), namespace="attendance")),
     path("instructors/", include(("instructors.urls", "instructors"), namespace="instructors")),
+    path('feedback/', include('feedback.urls')),
+
+    # General Views
     path("about/", views.about, name="about"),
     path("testimonials/", views.testimonials, name="testimonials"),
     path("contact/", views.contact, name="contact"),
     path("signup/", system_views.signup, name="signup"),
     path("login/", views.login, name="login"),
+    path('logout/', views.logout_view, name='logout'),
+    path("profile/", views.profile, name="profile"),
+
+    # Member & Instructor Dashboards / Features
     path('member/dashboard/', member_views.member_dashboard, name='member_dashboard'),
     path('instructor/dashboard/', instructor_views.instructor_dashboard, name='instructor_dashboard'),
-    path("profile/", views.profile, name="profile"),
-    path('dashboard/', member_views.member_dashboard, name='member_dashboard'),
-    path('profile/', member_views.member_profile, name='member_profile'),
-    path('sessions/', member_views.member_sessions, name='member_sessions'),   # ✅ fixed
-    path('payment/', system_views.member_payment, name='member_payment'),      # ✅ fixed
+    path('sessions/', member_views.member_sessions, name='member_sessions'),
+    path('payment/', system_views.member_payment, name='member_payment'),
     path("mpesa/callback/", mpesa_callback, name="mpesa_callback"),
-    path('feedback/', include('feedback.urls')),
-    path('logout/', views.logout_view, name='logout'),
 ]
 
 

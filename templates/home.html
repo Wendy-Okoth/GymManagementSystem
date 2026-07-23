@@ -1,28 +1,35 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Home | GymEncore{% endblock %}
-{% block content %}
-<div class="container mt-5">
-  <!-- Single Card -->
-  <div class="card shadow-lg text-center">
-    <div class="card-header bg-light">
-      <h1>Welcome to EncoreGym</h1>
-      <p class="lead">Your all-in-one fitness management system.</p>
-    </div>
-    <div class="card-body">
-      <!-- Gym Image -->
-      <img src="{% static 'images/gymthree.jpg' %}" alt="Gym Image" class="img-fluid mb-4" style="max-height:500px; object-fit:cover;">
 
-      
-      <p class="card-text">
-        At EncoreGym, we provide world-class gym equipment, professional weightlifting programs, yoga sessions, and personalized training to help you achieve your fitness goals.
+{% block content %}
+<div class="max-w-4xl mx-auto my-8">
+  <div class="bg-[#161b22] rounded-xl shadow-2xl border border-[#30363d] overflow-hidden text-center">
+    
+    <div class="bg-[#0d1117]/80 border-b border-[#30363d] p-8">
+      <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight">
+        Welcome to <span class="text-lime-500">GymEncore</span>
+      </h1>
+      <p class="text-slate-400 text-base md:text-lg mt-2 font-medium">Your high-performance fitness management system.</p>
+    </div>
+
+    <div class="p-6 md:p-8 space-y-6">
+      <div class="relative group overflow-hidden rounded-lg border border-[#30363d]">
+        <img src="{% static 'images/gymthree.jpg' %}" alt="Gym Image" class="w-full max-h-[480px] object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-60"></div>
+      </div>
+
+      <p class="text-slate-300 leading-relaxed text-base md:text-lg max-w-2xl mx-auto font-normal">
+        At GymEncore, we provide world-class equipment, elite strength training programs, dynamic group sessions, and personalized tracking to help you hit every fitness milestone.
       </p>
 
-      <!-- Call to Action -->
-      <a href="{% url 'signup' %}" class="btn btn-secondary btn-lg mt-3">Get Started</a>
+      <div>
+        <a href="{% url 'signup' %}" class="inline-block bg-lime-500 hover:bg-lime-600 text-black font-black text-lg py-3.5 px-8 rounded-lg transition-all shadow-lg shadow-lime-500/20 active:scale-95 uppercase tracking-wider">
+          Get Started
+        </a>
+      </div>
     </div>
+
   </div>
 </div>
 {% endblock %}
-
-

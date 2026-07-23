@@ -1,39 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Gym Management System{% endblock %}</title>
-
-    <!-- ✅ Bootstrap CSS via CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-          crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1B1tWz6k2v5Z0zO2vC2R7pXKp4YfRvH+8abtTE1Pi6jizo1Q6X2Q5Rk5j3z6+J9zKg==" 
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
-    <!-- ✅ Your custom styles -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}GymEncore{% endblock %}</title>
+  
+  <!-- Tailwind CSS CDN (Guarantees styles render immediately) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Tailwind Power Dark Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#0d1117',
+              surface: '#161b22',
+              border: '#30363d',
+              neon: '#84cc16', // Neon Green Accent
+              neonHover: '#65a30d',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-    {% include 'includes/navbar.html' %}
+<body class="bg-[#0d1117] text-slate-100 font-sans min-h-screen flex flex-col antialiased">
 
-    <div class="container mt-4">
-        {% block content %}
-        <!-- Page-specific content goes here -->
-        {% endblock %}
+  <!-- Main Navbar -->
+  {% include 'includes/navbar.html' %}
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#161b22] border-t border-[#30363d] py-6 mt-auto text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="font-bold text-lg text-white">Gym<span class="text-lime-500">Encore</span></span>
+        <span class="text-xs text-slate-500">| Buruburu Phase 3, Nairobi</span>
+      </div>
+      <p class="text-xs text-slate-500">&copy; {% now "Y" %} GymEncore. All rights reserved.</p>
     </div>
+  </footer>
 
-    {% include 'includes/footer.html' %}
-
-    <!-- ✅ Bootstrap JS via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
-            crossorigin="anonymous"></script>
 </body>
 </html>

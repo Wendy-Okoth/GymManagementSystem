@@ -1,45 +1,64 @@
 {% extends "base_member.html" %}
 {% block title %}Payment | GymEncore{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow-lg mx-auto" style="max-width: 600px;">
-    <div class="card-header bg-light text-center">
-      <h2>Payment</h2>
+<div class="max-w-xl mx-auto my-8">
+  <div class="bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden">
+    <div class="bg-slate-50 border-b border-slate-200 p-6 text-center">
+      <h2 class="text-2xl font-bold text-blue-700">M-Pesa Payment</h2>
+      <p class="text-xs text-slate-500 mt-1">Lipa na M-Pesa Online STK Push</p>
     </div>
-    <div class="card-body">
-      
+
+    <div class="p-6 space-y-6">
       <!-- Payment Plans -->
-      <div class="alert alert-secondary">
-        <strong>Payment Plans:</strong><br>
-        • Daily: 400 Ksh<br>
-        • Weekly: 1,000 Ksh<br>
-        • Monthly: 3,000 Ksh<br>
-        • Bi-Annually: 16,000 Ksh<br>
-        • Annually: 30,000 Ksh
+      <div class="bg-slate-50 border border-slate-200 text-slate-800 p-4 rounded-md text-sm leading-relaxed">
+        <strong class="font-bold text-slate-900 block mb-1">Standard Rates:</strong>
+        <ul class="list-disc list-inside space-y-0.5 text-slate-600">
+          <li>Daily: 400 KSH</li>
+          <li>Weekly: 1,000 KSH</li>
+          <li>Monthly: 3,000 KSH</li>
+          <li>Bi-Annually: 16,000 KSH</li>
+          <li>Annually: 30,000 KSH</li>
+        </ul>
       </div>
 
-      <form method="post">
+      <form method="post" action="{% url 'member_payment' %}" class="space-y-4">
         {% csrf_token %}
-        <div class="mb-3">
-          <label for="phone_number" class="form-label">Phone Number (2547...)</label>
-          <input type="text" class="form-control" name="phone_number" required>
+        <div>
+          <label for="phone_number" class="block text-sm font-semibold text-slate-700 mb-1">M-Pesa Phone Number</label>
+          <input type="text" id="phone_number" name="phone_number" placeholder="2547XXXXXXXX or 07XXXXXXXX" value="{{ user_phone }}" required class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          <p class="text-xs text-slate-500 mt-1">Must be an active Safaricom line.</p>
         </div>
-        <div class="mb-3">
-          <label for="amount" class="form-label">Amount</label>
-          <!-- Auto-filled from view -->
-          <input type="number" class="form-control" name="amount" value="{{ auto_amount }}" readonly>
+
+        <div>
+          <label for="amount" class="block text-sm font-semibold text-slate-700 mb-1">Amount (KSH)</label>
+          <input type="number" name="amount" value="{{ auto_amount|default:'3000' }}" readonly class="w-full px-3 py-2 border border-slate-200 rounded-md shadow-sm bg-slate-50 text-slate-600 font-bold cursor-not-allowed">
         </div>
-        <button type="submit" class="btn btn-secondary w-20">Pay with M-Pesa</button>
+
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-6 rounded-md transition-colors w-full cursor-pointer flex items-center justify-center space-x-2">
+          <span>Initiate STK Push</span>
+        </button>
       </form>
 
       {% if response %}
-        <div class="alert alert-info mt-3">
+        <div class="bg-sky-50 border border-sky-300 text-sky-900 p-4 rounded-md text-sm font-medium">
           {{ response }}
         </div>
       {% endif %}
     </div>
   </div>
 </div>
+
+<script>
+  // Helper to ensure phone is formatted as 254... on submit
+  document.querySelector("form").addEventListener("submit", function() {
+    const input = document.getElementById("phone_number");
+    let val = input.value.trim();
+    if (val.startsWith("0")) {
+      input.value = "254" + val.substring(1);
+    } else if (val.startsWith("+254")) {
+      input.value = val.replace("+", "");
+    }
+  });
+</script>
 {% endblock %}
-
-

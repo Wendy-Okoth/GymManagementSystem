@@ -1,65 +1,74 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Contact Us | GymEncore{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow-lg">
-    <div class="card-header text-center bg-light">
-      <img src="{% static 'images/favicon.png' %}" alt="GymEncore Logo" width="60" height="60" class="mb-2">
-      <h2>Contact Us</h2>
+<div class="max-w-xl mx-auto my-8">
+  <div class="bg-[#161b22] rounded-xl shadow-2xl border border-[#30363d] overflow-hidden">
+    
+    <div class="bg-[#0d1117]/80 border-b border-[#30363d] p-6 text-center">
+      <img src="{% static 'images/favicon.png' %}" alt="GymEncore Logo" class="w-14 h-14 mx-auto mb-3 object-contain drop-shadow-[0_0_10px_rgba(132,204,22,0.3)]">
+      <h2 class="text-2xl font-black text-white uppercase tracking-wider">Contact Us</h2>
     </div>
-    <div class="card-body">
-      <form id="contactForm" method="post">
+
+    <div class="p-6">
+      <form id="contactForm" method="post" class="space-y-4">
         {% csrf_token %}
 
-        <div class="mb-3">
-          <label for="first_name" class="form-label">First Name</label>
-          <input type="text" class="form-control" id="first_name" name="first_name" required>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="first_name" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">First Name</label>
+            <input type="text" id="first_name" name="first_name" required class="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-lime-500">
+          </div>
+
+          <div>
+            <label for="last_name" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required class="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-lime-500">
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="last_name" class="form-label">Last Name</label>
-          <input type="text" class="form-control" id="last_name" name="last_name" required>
+        <div>
+          <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-lime-500">
         </div>
 
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" required>
+        <div>
+          <label for="phone_number" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Phone Number</label>
+          <input type="text" id="phone_number" name="phone_number" required class="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-lime-500">
         </div>
 
-        <div class="mb-3">
-          <label for="phone_number" class="form-label">Phone Number</label>
-          <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+        <div>
+          <label for="subject" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Subject</label>
+          <input type="text" id="subject" name="subject" required class="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-lime-500">
         </div>
 
-        <div class="mb-3">
-          <label for="subject" class="form-label">Subject</label>
-          <input type="text" class="form-control" id="subject" name="subject" required>
+        <div>
+          <label for="message" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Message</label>
+          <textarea id="message" name="message" rows="4" required class="w-full px-3 py-2 bg-[#0d1117] border border-[#30363d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-lime-500"></textarea>
         </div>
 
-        <div class="mb-3">
-          <label for="message" class="form-label">Message</label>
-          <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-secondary btn-sm">Send</button>
+        <button type="submit" class="bg-lime-500 hover:bg-lime-600 text-black font-black uppercase tracking-wider py-3 px-6 rounded-lg transition-all shadow-lg shadow-lime-500/20 w-full cursor-pointer">
+          Send Message
+        </button>
       </form>
 
       <!-- Success Popup -->
-      <div id="successPopup" class="alert alert-success mt-3" style="display:none;">
+      <div id="successPopup" class="hidden mt-4 bg-emerald-950/60 border border-emerald-800 text-emerald-300 px-4 py-3 rounded-lg text-sm font-medium">
         ✅ Your message has been sent successfully!
       </div>
     </div>
+
   </div>
 </div>
+{% endblock %}
 
+{% block extra_js %}
 <script>
   document.getElementById("contactForm").addEventListener("submit", function(event) {
     event.preventDefault();
-    document.getElementById("successPopup").style.display = "block";
+    document.getElementById("successPopup").classList.remove("hidden");
     setTimeout(() => { event.target.submit(); }, 1000);
   });
 </script>
 {% endblock %}
-
-

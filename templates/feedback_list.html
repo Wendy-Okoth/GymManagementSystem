@@ -1,52 +1,58 @@
 {% extends "base_member.html" %}
 {% block content %}
-<div class="container mt-4">
+<div class="max-w-3xl mx-auto my-8">
 
-  <!-- ✅ Show Django messages as colored cards -->
+  <!-- Django Messages -->
   {% if messages %}
-    <div class="mb-3">
+    <div class="mb-6 space-y-3">
       {% for message in messages %}
         {% if message.tags == "error" %}
-          <div class="card border-danger mb-3">
-            <div class="card-body text-danger">
-              <strong>{{ message }}</strong>
-            </div>
+          <div class="bg-rose-950/60 border border-rose-800 text-rose-300 px-4 py-3 rounded-lg text-sm font-semibold">
+            ⚠️ {{ message }}
           </div>
         {% elif message.tags == "success" %}
-          <div class="card border-success mb-3">
-            <div class="card-body text-success">
-              <strong>{{ message }}</strong>
-            </div>
+          <div class="bg-emerald-950/60 border border-emerald-800 text-emerald-300 px-4 py-3 rounded-lg text-sm font-semibold">
+            ✅ {{ message }}
           </div>
         {% else %}
-          <div class="card border-secondary mb-3">
-            <div class="card-body text-secondary">
-              <strong>{{ message }}</strong>
-            </div>
+          <div class="bg-[#161b22] border border-[#30363d] text-slate-200 px-4 py-3 rounded-lg text-sm font-semibold">
+            ℹ️ {{ message }}
           </div>
         {% endif %}
       {% endfor %}
     </div>
   {% endif %}
-  <a href="{% url 'feedback_create' %}" class="btn btn-success mb-3">Add New Feedback</a>
 
-  <ul class="list-group">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-black text-white uppercase tracking-wider">Member Feedback</h2>
+    <a href="{% url 'feedback_create' %}" class="bg-lime-500 hover:bg-lime-600 text-black font-black py-2.5 px-5 rounded-lg transition-all shadow-lg shadow-lime-500/20 uppercase tracking-wider text-sm">
+      + New Feedback
+    </a>
+  </div>
+
+  <ul class="divide-y divide-[#30363d] border border-[#30363d] rounded-xl bg-[#161b22] overflow-hidden shadow-2xl">
     {% for fb in feedbacks %}
-      <li class="list-group-item">
-        <strong>Instructor : {{ fb.instructor }}</strong><br>
-        Rating: {{ fb.rating }} ⭐ <br>
-        {{ fb.comment }}<br>
-        <strong>Date: {{ fb.date }}</strong>
+      <li class="p-5 hover:bg-[#0d1117]/50 transition-colors">
+        <div class="text-slate-300 space-y-1">
+          <p><strong class="font-bold text-white">Instructor:</strong> {{ fb.instructor }}</p>
+          <p><strong class="font-bold text-white">Rating:</strong> <span class="text-lime-400 font-bold">{{ fb.rating }} ⭐</span></p>
+          <p class="text-slate-300 my-2 bg-[#0d1117] p-3 rounded-lg border border-[#30363d]">{{ fb.comment }}</p>
+          <p class="text-xs text-slate-500"><strong class="font-semibold text-slate-400">Date:</strong> {{ fb.date }}</p>
+        </div>
 
-        <div class="mt-2">
-          <a href="{% url 'feedback_edit' fb.id %}" class="btn btn-warning btn-sm">Edit</a>
-          <a href="{% url 'feedback_delete' fb.id %}" class="btn btn-danger btn-sm">Delete</a>
+        <div class="mt-4 flex space-x-3">
+          <a href="{% url 'feedback_edit' fb.id %}" class="bg-amber-500/20 hover:bg-amber-500 text-amber-400 hover:text-black border border-amber-500/40 text-xs font-extrabold uppercase py-1.5 px-3 rounded-lg transition-all">
+            Edit
+          </a>
+          <a href="{% url 'feedback_delete' fb.id %}" class="bg-rose-500/20 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/40 text-xs font-extrabold uppercase py-1.5 px-3 rounded-lg transition-all">
+            Delete
+          </a>
         </div>
       </li>
     {% empty %}
-      <li class="list-group-item">No feedback yet.</li>
+      <li class="p-8 text-slate-500 text-center font-medium">No feedback entries found.</li>
     {% endfor %}
   </ul>
+
 </div>
 {% endblock %}
-

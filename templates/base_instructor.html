@@ -1,44 +1,5 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Gym Management System{% endblock %}</title>
+{% extends "base.html" %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- ✅ FullCalendar CSS (ADD THIS) -->
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-
-    <!-- Your custom styles -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    <!-- ✅ Page-specific CSS -->
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
+{% block navbar %}
     {% include 'includes/instructor_navbar.html' %}
-
-    <div class="container mt-4">
-        {% block content %}
-        <!-- Page-specific content goes here -->
-        {% endblock %}
-    </div>
-
-    {% include 'includes/footer.html' %}
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- ✅ FullCalendar JS (CDN version - easier for debugging) -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-    
-    <!-- ✅ Page-specific JS -->
-    {% block extra_js %}{% endblock %}
-</body>
-</html>
+{% endblock %}

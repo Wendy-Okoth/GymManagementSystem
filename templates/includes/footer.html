@@ -1,19 +1,54 @@
-{% load static %}
-<footer class="text-white text-center py-4 mt-5">
-  <div class="container">
-    <p>&copy; 2025 GymEncore. All rights reserved.</p>
-    <div class="d-flex justify-content-center mt-3">
-      <a href="https://instagram.com" target="_blank" class="mx-2">
-        <img src="{% static 'icons/instagram.svg' %}" alt="Instagram" width="24" height="24">
-      </a>
-      <a href="https://twitter.com" target="_blank" class="mx-2">
-        <img src="{% static 'icons/twitter.svg' %}" alt="Twitter" width="24" height="24">
-      </a>
-      <a href="https://tiktok.com" target="_blank" class="mx-2">
-        <img src="{% static 'icons/tiktok.svg' %}" alt="TikTok" width="24" height="24">
-      </a>
+<footer class="bg-slate-950 border-t border-slate-800 pt-12 pb-8 text-slate-400 text-sm mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800/80">
+            
+            <!-- Brand Column -->
+            <div class="space-y-4 md:col-span-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-black">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <span class="text-xl font-black text-white tracking-tight">
+                        Gym<span class="text-emerald-500">Encore</span>
+                    </span>
+                </div>
+                <p class="text-slate-400 text-xs leading-relaxed max-w-sm">
+                    Complete gym management system built for high-performance athletic facilities, personal trainers, and fitness enthusiasts across East Africa.
+                </p>
+            </div>
+
+            <!-- Quick Navigation -->
+            <div>
+                <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Platform</h5>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="{% url 'about' %}" class="hover:text-emerald-400 transition">About GymEncore</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Training Programs</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Instructor Roster</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Membership Plans</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Details -->
+            <div>
+                <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Location</h5>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">
+                    Buruburu Phase 3, Mumias South Rd<br>
+                    Nairobi, Kenya
+                </p>
+                <div class="flex space-x-4 pt-2 text-base text-slate-400">
+                    <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Copyright -->
+        <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 space-y-2 sm:space-y-0">
+            <p>© {% now "Y" %} GymEncore. All rights reserved.</p>
+            <p class="text-slate-600">Built for Encore Gym Fitness Studio</p>
+        </div>
     </div>
-  </div>
 </footer>
-
-

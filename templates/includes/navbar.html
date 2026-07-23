@@ -1,29 +1,29 @@
 {% load static %}
-{% block content %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <!-- Brand Icon -->
-    <a class="navbar-brand" href="/">
-      <img src="{% static 'images/favicon.png' %}" alt="Gym Icon" width="50" height="50" class="d-inline-block align-text-top">
-    </a>
+<nav class="bg-[#161b22] border-b border-[#30363d] sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      
+      <!-- Logo -->
+      <a href="{% url 'home' %}" class="flex items-center space-x-3">
+        <img src="{% static 'images/favicon.png' %}" alt="GymEncore Logo" class="h-9 w-9 object-contain">
+        <span class="font-extrabold text-xl tracking-wider text-white">GYM<span class="text-lime-500">ENCORE</span></span>
+      </a>
 
-    <!-- Toggler for mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- Navigation Links with Spacing -->
+      <div class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide">
+        <a href="{% url 'home' %}" class="text-slate-300 hover:text-lime-400 transition-colors">Home</a>
+        <a href="{% url 'about' %}" class="text-slate-300 hover:text-lime-400 transition-colors">About Us</a>
+        <a href="{% url 'contact' %}" class="text-slate-300 hover:text-lime-400 transition-colors">Contact Us</a>
+        
+        {% if user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="text-slate-300 hover:text-lime-400 transition-colors">Profile</a>
+          <a href="{% url 'logout' %}" class="text-rose-400 hover:text-rose-300 font-bold transition-colors">Logout</a>
+        {% else %}
+          <a href="{% url 'signup' %}" class="text-slate-300 hover:text-lime-400 transition-colors">Signup</a>
+          <a href="{% url 'login' %}" class="bg-lime-500 hover:bg-lime-600 text-black font-bold px-4 py-2 rounded-lg transition-all shadow-lg shadow-lime-500/20">Login</a>
+        {% endif %}
+      </div>
 
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-      </ul>
     </div>
   </div>
 </nav>
-{% endblock %}
-

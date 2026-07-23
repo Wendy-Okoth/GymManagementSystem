@@ -1,51 +1,50 @@
 {% extends "base_member.html" %}
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">💬 Give Feedback</h4>
-        </div>
-        <div class="card-body">
-          <form method="post">
-            {% csrf_token %}
-
-            <!-- Rating -->
-            <div class="mb-3">
-              <label class="form-label d-block mb-2">Rating</label>
-              <div class="d-flex flex-row gap-3">
-                {% for radio in form.rating %}
-                  <div class="form-check">
-                    {{ radio.tag }}
-                    <label class="form-check-label">
-                      {{ radio.choice_label }} ⭐
-                    </label>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-
-            <!-- Comment -->
-            <div class="mb-3">
-              <label for="id_comment" class="form-label d-block mb-2">Review</label>
-              {{ form.comment }}
-            </div>
-
-            <!-- Actions -->
-            <div class="d-flex justify-content-between">
-              <button type="submit" class="btn btn-success">Submit Feedback</button>
-              <a href="{% url 'feedback_list' %}" class="btn btn-outline-secondary">Cancel</a>
-            </div>
-          </form>
-        </div>
-      </div>
+<div class="max-w-2xl mx-auto my-8">
+  <div class="bg-[#161b22] rounded-xl shadow-2xl border border-[#30363d] overflow-hidden">
+    
+    <div class="bg-[#0d1117]/80 border-b border-[#30363d] px-6 py-4 flex items-center space-x-2">
+      <span class="text-lime-500 text-xl">💬</span>
+      <h4 class="text-xl font-black text-white uppercase tracking-wide">Give Feedback</h4>
     </div>
+
+    <div class="p-6">
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Rating -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Rating</label>
+          <div class="flex flex-wrap gap-4 items-center bg-[#0d1117] p-4 rounded-lg border border-[#30363d]">
+            {% for radio in form.rating %}
+              <label class="inline-flex items-center space-x-2 text-sm text-slate-200 cursor-pointer hover:text-lime-400 transition-colors">
+                <span class="accent-lime-500">{{ radio.tag }}</span>
+                <span class="font-semibold">{{ radio.choice_label }} ⭐</span>
+              </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Comment -->
+        <div>
+          <label for="id_comment" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Review</label>
+          <div class="[&>textarea]:w-full [&>textarea]:px-4 [&>textarea]:py-3 [&>textarea]:bg-[#0d1117] [&>textarea]:border [&>textarea]:border-[#30363d] [&>textarea]:rounded-lg [&>textarea]:text-white [&>textarea]:focus:ring-2 [&>textarea]:focus:ring-lime-500 [&>textarea]:focus:outline-none">
+            {{ form.comment }}
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-2">
+          <button type="submit" class="bg-lime-500 hover:bg-lime-600 text-black font-black py-2.5 px-6 rounded-lg transition-all shadow-lg shadow-lime-500/20 uppercase tracking-wider cursor-pointer">
+            Submit Feedback
+          </button>
+          <a href="{% url 'feedback_list' %}" class="border border-[#30363d] text-slate-300 hover:bg-[#0d1117] hover:text-white font-semibold py-2.5 px-6 rounded-lg transition-colors">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+
   </div>
 </div>
 {% endblock %}
-
-
-
-
- 

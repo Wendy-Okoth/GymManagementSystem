@@ -1,10 +1,52 @@
-
 {% extends "base_member.html" %}
 {% block title %}Member Dashboard | GymEncore{% endblock %}
+
 {% block content %}
-<div class="container mt-5 text-center">
-  <h2>Welcome, {{ user.first_name }} {{ user.last_name }}!</h2>
-  <p class="lead">This is your personalized dashboard.</p>
+<div class="max-w-5xl mx-auto my-8 space-y-8">
+  
+  <!-- Welcome Banner -->
+  <div class="bg-[#161b22] rounded-xl border border-[#30363d] p-8 shadow-2xl relative overflow-hidden">
+    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-lime-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <div class="relative z-10 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-lime-400">Member Portal</span>
+        <h1 class="text-3xl md:text-4xl font-black text-white mt-1">
+          Welcome back, <span class="text-lime-400">{{ user.first_name }} {{ user.last_name }}</span>!
+        </h1>
+        <p class="text-slate-400 text-sm mt-2 max-w-xl">
+          Here is your personal fitness hub. Check your upcoming training sessions, view workout routines, or give feedback.
+        </p>
+      </div>
+      <a href="{% url 'member_sessions' %}" class="bg-lime-500 hover:bg-lime-600 text-black font-black uppercase tracking-wider px-6 py-3 rounded-lg transition-all shadow-lg shadow-lime-500/20 whitespace-nowrap active:scale-95 text-sm">
+        View Schedule
+      </a>
+    </div>
+  </div>
+
+  <!-- Quick Access Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-[#161b22] p-6 rounded-xl border border-[#30363d] hover:border-lime-500/50 transition-colors group">
+      <div class="w-10 h-10 rounded-lg bg-lime-500/10 flex items-center justify-center text-lime-400 mb-4 text-xl">📅</div>
+      <h3 class="text-lg font-bold text-white group-hover:text-lime-400 transition-colors">Sessions</h3>
+      <p class="text-slate-400 text-xs mt-1">Book or review your booked group classes and training sessions.</p>
+      <a href="{% url 'member_sessions' %}" class="inline-block mt-4 text-xs font-extrabold text-lime-400 uppercase tracking-wider">Explore &rarr;</a>
+    </div>
+
+    <div class="bg-[#161b22] p-6 rounded-xl border border-[#30363d] hover:border-lime-500/50 transition-colors group">
+      <div class="w-10 h-10 rounded-lg bg-lime-500/10 flex items-center justify-center text-lime-400 mb-4 text-xl">💬</div>
+      <h3 class="text-lg font-bold text-white group-hover:text-lime-400 transition-colors">Feedback</h3>
+      <p class="text-slate-400 text-xs mt-1">Leave reviews and suggestions for your instructors and facility.</p>
+      <a href="{% url 'feedback_list' %}" class="inline-block mt-4 text-xs font-extrabold text-lime-400 uppercase tracking-wider">My Feedback &rarr;</a>
+    </div>
+
+    <div class="bg-[#161b22] p-6 rounded-xl border border-[#30363d] hover:border-lime-500/50 transition-colors group">
+      <div class="w-10 h-10 rounded-lg bg-lime-500/10 flex items-center justify-center text-lime-400 mb-4 text-xl">👤</div>
+      <h3 class="text-lg font-bold text-white group-hover:text-lime-400 transition-colors">Profile & Plan</h3>
+      <p class="text-slate-400 text-xs mt-1">Manage your membership status, personal details, and account preferences.</p>
+      <a href="{% url 'profile' %}" class="inline-block mt-4 text-xs font-extrabold text-lime-400 uppercase tracking-wider">Settings &rarr;</a>
+    </div>
+  </div>
+
 </div>
 {% endblock %}
-
